@@ -1,0 +1,47 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f4f4f9;
+  padding: 20px;
+}
+
+.form-container {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  width: 60%;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input, textarea, button {
+  width: 90%;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background: #2b7a78;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #20575a;
+}
+
+.recipe {
+  background: white;
+  margin: 10px auto;
+  width: 60%;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+img {
+  max-width: 100%;
+  border-radius: 5px;
+}

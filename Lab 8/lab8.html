@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Management System</title>
+  <link rel="stylesheet" href="lab8.css">
+</head>
+<body>
+  <h1>🍽 Recipe Management System</h1>
+
+  <div class="form-container">
+    <h2>Add / Edit Recipe</h2>
+    <form id="recipeForm">
+      <input type="text" id="title" placeholder="Recipe Title" required><br>
+      <textarea id="ingredients" placeholder="Ingredients" required></textarea><br>
+      <textarea id="instructions" placeholder="Instructions" required></textarea><br>
+      <input type="file" id="image" accept="image/*"><br>
+      <button type="submit">Save Recipe</button>
+    </form>
+  </div>
+
+  <h2>All Recipes</h2>
+  <div id="recipeList"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
