@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latest News App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #1e88e5;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+    #news-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .news-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .news-card:hover {
+      transform: translateY(-4px);
+    }
+    .news-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .news-card-content {
+      padding: 10px;
+    }
+    .news-card-content h2 {
+      font-size: 18px;
+      color: #1e88e5;
+      margin: 5px 0;
+    }
+    .news-card-content p {
+      font-size: 14px;
+      color: #444;
+    }
+    .news-card-content a {
+      display: inline-block;
+      margin-top: 5px;
+      color: #1e88e5;
+      text-decoration: none;
+    }
+    .news-card-content a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #1e88e5;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📰 Latest News</h1>
+  </header>
+
+  <div class="container">
+    <input type="text" id="search" placeholder="Search news..." style="width:100%;padding:8px;font-size:16px;">
+    <div id="news-container">Loading news...</div>
+  </div>
+
+  <footer>
+    <p>Powered by GNews | Made by Safwan Kasi</p>
+  </footer>
+
+  <script>
+    const apiKey = "0359598b21a0aab06536e22cf18e9030"; // Replace with your GNews API key
+    const apiUrl = `https://gnews.io/api/v4/top-headlines?lang=en&country=us&max=10&token=${apiKey}`;
+
+    const newsContainer = document.getElementById("news-container");
+    const searchInput = document.getElementById("search");
+
+    async function fetchNews(query = "") {
+      let url = query 
+        ? `https://gnews.io/api/v4/search?q=${query}&lang=en&max=10&token=${apiKey}` 
+        : apiUrl;
+
+      newsContainer.innerHTML = "Loading news...";
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!data.articles || data.articles.length === 0) {
+          newsContainer.innerHTML = "<p>No news found.</p>";
+          return;
+        }
+
+        displayNews(data.articles);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+        newsContainer.innerHTML = "<p>⚠ Failed to load news.</p>";
+      }
+    }
+
+    function displayNews(articles) {
+      newsContainer.innerHTML = "";
+      for (let i = 0; i < articles.length; i++) {
+        const article = articles[i];
+        const card = document.createElement("div");
+        card.className = "news-card";
+        card.innerHTML = `
+          <img src="${article.image || 'https://via.placeholder.com/400x160'}" alt="News Image">
+          <div class="news-card-content">
+            <h2>${article.title}</h2>
+            <p>${article.description || 'No description available.'}</p>
+            <a href="${article.url}" target="_blank">Read More →</a>
+          </div>
+        `;
+        newsContainer.appendChild(card);
+      }
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      const query = e.target.value.trim();
+      fetchNews(query);
+    });
+
+    fetchNews();
+  </script>
+</body>
+</html>
